@@ -6,11 +6,9 @@ const context = canvas.getContext("2d");
 let tissueElementsArr = [];
 let tileSize = 64;
 
-const horizontalTilesAmount = Math.ceil(canvas.width/tileSize); 
-console.log(horizontalTilesAmount);
+const horizontalTilesAmount = Math.ceil(canvas.width/tileSize);
 
-const verticalTilesAmount = Math.ceil(canvas.height/tileSize); 
-console.log(verticalTilesAmount);
+const verticalTilesAmount = Math.ceil(canvas.height/tileSize);
 
 let xPos = 0;
 let yPos = 0;
@@ -21,26 +19,25 @@ let cursorY = undefined;
 window.addEventListener("mousemove", function(e) {
     cursorX = e.x;
     cursorY = e.y;
-})
-
+});
 
 function Tile(xPos, yPos, color) {
     this.xPos = xPos;
     this.yPos = yPos;
-    this.color = color;    
+    this.color = color;
 
     this.draw = function() {
-
-        this.color = Math.sqrt(Math.pow(((this.xPos + (tileSize / 2)) - cursorX), 2) + Math.pow((this.yPos + (tileSize / 2) - cursorY), 2));
+        this.color = Math.sqrt(
+            Math.pow(this.xPos + tileSize / 2 - cursorX, 2) +
+                Math.pow(this.yPos + tileSize / 2 - cursorY, 2),
+        );
 
         this.color = 160 - (this.color / 2);
-        console.log(this.color);
 
-        context.fillStyle = `rgba(1, ${this.color}, 1)`;
+        context.fillStyle = `rgb(1, ${this.color}, 1)`;
         context.fillRect(xPos, yPos, tileSize, tileSize);
     }
 }
-
 
 function genController() {
     for(let i = 0; i < verticalTilesAmount; i++) {
@@ -67,4 +64,3 @@ function animate() {
 }
 
 animate();
-
